@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bengal Badminton Academy - Attendance</title>
+    <title>STADIA Attendance System</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 15px;
             display: flex;
@@ -23,19 +23,18 @@
 
         .container {
             background: white;
-            border-radius: 25px;
-            box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             max-width: 500px;
             width: 100%;
-            padding: 0;
-            overflow: hidden;
-            animation: slideUp 0.6s ease-out;
+            padding: 30px;
+            animation: slideUp 0.5s ease-out;
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -43,132 +42,75 @@
             }
         }
 
-        .header-brand {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            padding: 30px 20px;
+        .header {
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header-brand::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulse 3s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+            margin-bottom: 25px;
         }
 
         .logo {
-            font-size: 70px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-            animation: bounce 2s infinite;
+            font-size: 60px;
+            margin-bottom: 10px;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .header-brand h1 {
-            color: #ffffff;
-            font-size: 24px;
+        .header h1 {
+            color: #667eea;
+            font-size: 26px;
             margin-bottom: 5px;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 1;
         }
 
-        .header-brand .subtitle {
-            color: #e0e7ff;
-            font-size: 14px;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-        }
-
-        .content-area {
-            padding: 30px;
+        .header p {
+            color: #666;
+            font-size: 13px;
         }
 
         .security-badge {
-            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-            border: 2px solid #16a34a;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 2px solid #28a745;
+            border-radius: 10px;
             padding: 12px;
             text-align: center;
             font-size: 12px;
-            color: #14532d;
+            color: #155724;
             font-weight: bold;
             margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(22,163,74,0.2);
-        }
-
-        .test-mode-badge {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border: 2px solid #f59e0b;
-            border-radius: 15px;
-            padding: 12px;
-            text-align: center;
-            font-size: 12px;
-            color: #78350f;
-            font-weight: bold;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .test-mode-badge.show {
-            display: block;
+            box-shadow: 0 2px 8px rgba(40,167,69,0.2);
         }
 
         .centre-card {
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-            border: 2px solid #3b82f6;
-            border-radius: 15px;
-            padding: 18px;
+            background: linear-gradient(135deg, #e7f3ff 0%, #cfe7ff 100%);
+            border: 2px solid #2196F3;
+            border-radius: 12px;
+            padding: 15px;
             text-align: center;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 12px rgba(59,130,246,0.2);
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.2);
         }
 
         .centre-card .label {
-            color: #1e40af;
-            font-size: 13px;
+            color: #0d47a1;
+            font-size: 12px;
             font-weight: 600;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            margin-bottom: 5px;
         }
 
         .centre-card .value {
-            color: #1e3a8a;
-            font-size: 24px;
+            color: #0d47a1;
+            font-size: 20px;
             font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         .status-box {
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
             display: none;
             text-align: center;
-            animation: fadeIn 0.4s ease-out;
+            animation: fadeIn 0.3s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .status-box.show {
@@ -176,52 +118,46 @@
         }
 
         .status-box.checking {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border: 2px solid #f59e0b;
+            background: #fff3cd;
+            border: 2px solid #ffc107;
         }
 
         .status-box.success {
-            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-            border: 2px solid #16a34a;
+            background: #d4edda;
+            border: 2px solid #28a745;
         }
 
         .status-box.error {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-            border: 2px solid #dc2626;
+            background: #f8d7da;
+            border: 2px solid #dc3545;
         }
 
         .status-icon {
-            font-size: 60px;
-            margin-bottom: 15px;
-            animation: scaleIn 0.5s ease-out;
-        }
-
-        @keyframes scaleIn {
-            from { transform: scale(0); }
-            to { transform: scale(1); }
+            font-size: 50px;
+            margin-bottom: 12px;
         }
 
         .status-text {
             font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #1f2937;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
         }
 
         .status-detail {
-            font-size: 14px;
-            color: #6b7280;
-            line-height: 1.6;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
         }
 
         .spinner {
-            border: 4px solid #f3f4f6;
-            border-top: 4px solid #3b82f6;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
         }
 
         @keyframes spin {
@@ -230,15 +166,14 @@
         }
 
         .session-alert {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border: 2px solid #f59e0b;
-            border-radius: 15px;
-            padding: 18px;
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
             margin-bottom: 20px;
-            font-size: 14px;
-            color: #78350f;
+            font-size: 13px;
+            color: #856404;
             display: none;
-            box-shadow: 0 4px 12px rgba(245,158,11,0.2);
         }
 
         .session-alert.show {
@@ -246,56 +181,55 @@
         }
 
         .session-alert strong {
-            color: #451a03;
+            color: #533f03;
             display: block;
-            margin-bottom: 10px;
-            font-size: 15px;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
 
         .session-alert .time {
-            color: #16a34a;
+            color: #28a745;
             font-weight: bold;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
-            color: #1f2937;
+            margin-bottom: 8px;
+            color: #333;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
         }
 
         select {
             width: 100%;
-            padding: 14px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
+            padding: 13px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
             font-size: 16px;
             background: white;
             transition: all 0.3s;
             cursor: pointer;
-            color: #1f2937;
         }
 
         select:focus {
             outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 4px rgba(59,130,246,0.1);
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
         }
 
         select:disabled {
-            background: #f9fafb;
+            background: #f5f5f5;
             cursor: not-allowed;
-            color: #9ca3af;
+            color: #999;
         }
 
         .radio-group {
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
 
         .radio-option {
@@ -310,78 +244,88 @@
 
         .radio-option label {
             display: block;
-            padding: 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 16px;
+            font-size: 15px;
             background: white;
-            font-weight: 600;
         }
 
         .radio-option input[type="radio"]:checked + label {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border-color: #3b82f6;
-            transform: scale(1.03);
-            box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+            border-color: #667eea;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(102,126,234,0.3);
         }
 
         .radio-option input[type="radio"]:disabled + label {
-            background: #f9fafb;
-            color: #d1d5db;
+            background: #f5f5f5;
+            color: #999;
             cursor: not-allowed;
-            border-color: #e5e7eb;
+            border-color: #ddd;
         }
 
         .btn {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 18px;
+            border-radius: 10px;
+            font-size: 17px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 10px;
-            box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+            box-shadow: 0 4px 15px rgba(102,126,234,0.3);
         }
 
         .btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(59,130,246,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102,126,234,0.4);
         }
 
         .btn:active:not(:disabled) {
-            transform: translateY(-1px);
+            transform: translateY(0);
         }
 
         .btn:disabled {
-            background: #d1d5db;
+            background: #ccc;
             cursor: not-allowed;
             box-shadow: none;
         }
 
         .info-box {
-            background: #eff6ff;
-            border-left: 4px solid #3b82f6;
-            padding: 14px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            color: #1e40af;
-            line-height: 1.6;
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #0d47a1;
+            line-height: 1.5;
+        }
+
+        .name-first-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #856404;
+            line-height: 1.5;
         }
 
         .success-screen {
             display: none;
             text-align: center;
             padding: 20px;
-            animation: slideUp 0.6s ease-out;
+            animation: slideUp 0.5s ease-out;
         }
 
         .success-screen.show {
@@ -389,46 +333,43 @@
         }
 
         .success-icon-big {
-            font-size: 90px;
-            margin-bottom: 25px;
-            animation: bounceIn 0.8s ease-out;
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 0.6s ease-out;
         }
 
-        @keyframes bounceIn {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
         .success-screen h2 {
-            color: #16a34a;
-            margin-bottom: 12px;
-            font-size: 26px;
+            color: #28a745;
+            margin-bottom: 10px;
+            font-size: 24px;
         }
 
         .success-screen p {
-            color: #6b7280;
-            margin-bottom: 25px;
-            font-size: 16px;
-            line-height: 1.6;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 15px;
         }
 
         .details-card {
-            background: #f9fafb;
-            padding: 20px;
-            border-radius: 15px;
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 10px;
             text-align: left;
-            margin: 25px 0;
-            font-size: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin: 20px 0;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         .details-row {
-            padding: 12px 0;
-            border-bottom: 1px solid #e5e7eb;
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
             display: flex;
             justify-content: space-between;
-            align-items: center;
         }
 
         .details-row:last-child {
@@ -436,135 +377,124 @@
         }
 
         .details-row strong {
-            color: #4b5563;
+            color: #495057;
         }
 
         .details-row span {
-            color: #1f2937;
+            color: #212529;
             font-weight: 600;
         }
 
         .footer {
-            background: #f9fafb;
             text-align: center;
-            padding: 20px;
-            font-size: 13px;
-            color: #6b7280;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .footer strong {
-            color: #7e22ce;
-            font-weight: 700;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 12px;
+            color: #999;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header-brand">
-            <div class="logo">🏸</div>
-            <h1>BENGAL BADMINTON ACADEMY</h1>
-            <p class="subtitle">GPS-Verified Attendance System</p>
+        <div class="header">
+            <div class="logo">🎯</div>
+            <h1>STADIA Attendance</h1>
+            <p>GPS-Verified Check In/Out System</p>
         </div>
 
-        <div class="content-area">
-            <div class="security-badge">
-                🔒 SECURE GPS TRACKING • LOCATION VERIFIED
+        <div class="security-badge">
+            🔒 SECURE GPS TRACKING • LOCATION VERIFIED
+        </div>
+
+        <div class="centre-card">
+            <div class="label">Centre Location</div>
+            <div class="value" id="centreDisplay">Loading...</div>
+        </div>
+
+        <div class="status-box checking show" id="statusBox">
+            <div class="spinner"></div>
+            <div class="status-text">Initializing System...</div>
+            <div class="status-detail">Please wait...</div>
+        </div>
+
+        <div id="mainForm" style="display: none;">
+            <div class="name-first-box">
+                ⚠️ <strong>IMPORTANT:</strong> Select your name FIRST, then we'll verify your location.
             </div>
 
-            <div class="test-mode-badge" id="testModeBadge">
-                🧪 TEST MODE ACTIVE • GPS VERIFICATION BYPASSED
-            </div>
+            <div class="session-alert" id="sessionAlert"></div>
 
-            <div class="centre-card">
-                <div class="label">Centre Location</div>
-                <div class="value" id="centreDisplay">Loading...</div>
-            </div>
-
-            <div class="status-box checking show" id="statusBox">
-                <div class="spinner"></div>
-                <div class="status-text">Initializing System...</div>
-                <div class="status-detail">Please wait while we verify your location...</div>
-            </div>
-
-            <div id="mainForm" style="display: none;">
-                <div class="info-box">
-                    📍 Your GPS location is being tracked. You must be within 100 meters of the centre to mark attendance.
+            <form id="attendanceForm">
+                <div class="form-group">
+                    <label>Select Your Name FIRST *</label>
+                    <select id="coachName" required>
+                        <option value="">-- Choose Your Name --</option>
+                        <option value="ABHISHEK MAJHI">ABHISHEK MAJHI</option>
+                        <option value="ALAPAN SEN">ALAPAN SEN</option>
+                        <option value="ARKO DAS">ARKO DAS</option>
+                        <option value="ARUP MORAL">ARUP MORAL</option>
+                        <option value="AYON CHAKRABORTY">AYON CHAKRABORTY</option>
+                        <option value="DEBJOY CHAKRABORTY">DEBJOY CHAKRABORTY</option>
+                        <option value="DIBYADITYA SENGUPTA">DIBYADITYA SENGUPTA</option>
+                        <option value="ISHIKA TARAFDER">ISHIKA TARAFDER</option>
+                        <option value="MD. JAVED">MD. JAVED</option>
+                        <option value="NISHA KUMARI RAJAK">NISHA KUMARI RAJAK</option>
+                        <option value="PRATIK GUPTA">PRATIK GUPTA</option>
+                        <option value="PRITIMOY MONDAL">PRITIMOY MONDAL</option>
+                        <option value="PRIYANKA NASKAR">PRIYANKA NASKAR</option>
+                        <option value="RAHUL NATH">RAHUL NATH</option>
+                        <option value="RAJDEEP MITRA">RAJDEEP MITRA</option>
+                        <option value="RATUL RAY">RATUL RAY</option>
+                        <option value="SAMAR MUNDA">SAMAR MUNDA</option>
+                        <option value="SAMRIDDHA PAL">SAMRIDDHA PAL</option>
+                        <option value="SAPTARSHI MONDAL">SAPTARSHI MONDAL</option>
+                        <option value="SHANTANU KUJUR">SHANTANU KUJUR</option>
+                        <option value="SUBHOJIT SANFUI">SUBHOJIT SANFUI</option>
+                        <option value="SUDHA RANI MAHATO">SUDHA RANI MAHATO</option>
+                        <option value="SUDIP CHATTERJEE">SUDIP CHATTERJEE</option>
+                        <option value="SUJIT BHATTACHARYA">SUJIT BHATTACHARYA</option>
+                        <option value="SUVADIP DAS">SUVADIP DAS</option>
+                        <option value="TANMOY ROY">TANMOY ROY</option>
+                        <option value="YUDHAJIT DAS">YUDHAJIT DAS</option>
+                    </select>
                 </div>
 
-                <div class="session-alert" id="sessionAlert"></div>
-
-                <form id="attendanceForm">
-                    <div class="form-group">
-                        <label>Select Your Name *</label>
-                        <select id="coachName" required>
-                            <option value="">-- Choose Your Name --</option>
-                            <option value="ABHISHEK MAJHI">ABHISHEK MAJHI</option>
-                            <option value="ALAPAN SEN">ALAPAN SEN</option>
-                            <option value="ARKO DAS">ARKO DAS</option>
-                            <option value="ARUP MORAL">ARUP MORAL</option>
-                            <option value="AYON CHAKRABORTY">AYON CHAKRABORTY</option>
-                            <option value="DEBJOY CHAKRABORTY">DEBJOY CHAKRABORTY</option>
-                            <option value="DIBYADITYA SENGUPTA">DIBYADITYA SENGUPTA</option>
-                            <option value="ISHIKA TARAFDER">ISHIKA TARAFDER</option>
-                            <option value="MD. JAVED">MD. JAVED</option>
-                            <option value="NISHA KUMARI RAJAK">NISHA KUMARI RAJAK</option>
-                            <option value="PRATIK GUPTA">PRATIK GUPTA</option>
-                            <option value="PRITIMOY MONDAL">PRITIMOY MONDAL</option>
-                            <option value="PRIYANKA NASKAR">PRIYANKA NASKAR</option>
-                            <option value="RAHUL NATH">RAHUL NATH</option>
-                            <option value="RAJDEEP MITRA">RAJDEEP MITRA</option>
-                            <option value="RATUL RAY">RATUL RAY</option>
-                            <option value="SAMAR MUNDA">SAMAR MUNDA</option>
-                            <option value="SAMRIDDHA PAL">SAMRIDDHA PAL</option>
-                            <option value="SAPTARSHI MONDAL">SAPTARSHI MONDAL</option>
-                            <option value="SHANTANU KUJUR">SHANTANU KUJUR</option>
-                            <option value="SUBHOJIT SANFUI">SUBHOJIT SANFUI</option>
-                            <option value="SUDHA RANI MAHATO">SUDHA RANI MAHATO</option>
-                            <option value="SUDIP CHATTERJEE">SUDIP CHATTERJEE</option>
-                            <option value="SUJIT BHATTACHARYA">SUJIT BHATTACHARYA</option>
-                            <option value="SUVADIP DAS">SUVADIP DAS</option>
-                            <option value="TANMOY ROY">TANMOY ROY</option>
-                            <option value="YUDHAJIT DAS">YUDHAJIT DAS</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Select Action *</label>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="checkin" name="action" value="Check - In Time" required>
-                                <label for="checkin">✅ Check In</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="checkout" name="action" value="Check - out Time" disabled>
-                                <label for="checkout">🚪 Check Out</label>
-                            </div>
+                <div class="form-group">
+                    <label>Select Action *</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="checkin" name="action" value="Check - In Time" required>
+                            <label for="checkin">✅ Check In</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="checkout" name="action" value="Check - out Time" disabled>
+                            <label for="checkout">🚪 Check Out</label>
                         </div>
                     </div>
+                </div>
 
-                    <button type="submit" class="btn" id="submitBtn">
-                        <span id="btnText">📍 Verify Location & Submit</span>
-                    </button>
-                </form>
-            </div>
+                <button type="submit" class="btn" id="submitBtn">
+                    <span id="btnText">📍 Verify Location & Submit</span>
+                </button>
+            </form>
+        </div>
 
-            <div class="success-screen" id="successScreen">
-                <div class="success-icon-big">✅</div>
-                <h2 id="successTitle">Success!</h2>
-                <p id="successMessage"></p>
-                <div class="details-card" id="successDetails"></div>
-                <button class="btn" onclick="location.reload()">✨ Done</button>
-            </div>
+        <div class="success-screen" id="successScreen">
+            <div class="success-icon-big">✅</div>
+            <h2 id="successTitle">Success!</h2>
+            <p id="successMessage"></p>
+            <div class="details-card" id="successDetails"></div>
+            <button class="btn" onclick="location.reload()">✨ Done</button>
         </div>
 
         <div class="footer">
-            Powered by <strong>STADIA AI</strong>
+            Powered by STADIA Automation
         </div>
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxGGRsq3qpxA4wmV8a8mzY0rq7F7jMrYhNvmPya1v6eRisSHJM_Qj5Pf77Roy_JX2lc/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyCu1l2BWlIJ9HN09r7Df7TF-kEYBYC-UpzODlGOcLWuZEZTr8-K9mBhDoaqvhvdsQw/exec';
 
         const CENTRES = {
             'SEBS': { lat: 22.5801, lon: 88.3742, radius: 100 },
@@ -579,13 +509,8 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const centreName = urlParams.get('centre')?.toUpperCase() || null;
-        const testMode = urlParams.get('test') === 'true';
         let userLocation = null;
         let currentSession = null;
-
-        if (testMode) {
-            document.getElementById('testModeBadge').classList.add('show');
-        }
 
         function showStatus(type, icon, text, detail) {
             const box = document.getElementById('statusBox');
@@ -638,6 +563,7 @@
             try {
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
@@ -692,27 +618,18 @@
 
             document.getElementById('centreDisplay').textContent = centreName;
 
-            if (testMode) {
-                userLocation = { lat: CENTRES[centreName].lat, lon: CENTRES[centreName].lon, accuracy: 5 };
-                showStatus('success', '🧪', 'Test Mode Active', 'GPS verification bypassed for testing.');
-                setTimeout(() => {
-                    document.getElementById('statusBox').style.display = 'none';
-                    document.getElementById('mainForm').style.display = 'block';
-                }, 1500);
-            } else {
-                showStatus('checking', '', 'Getting Your Location...', 'This may take a few seconds...');
-                try {
-                    userLocation = await getUserLocation();
-                } catch (e) {
-                    showStatus('error', '❌', 'Location Access Required', e.message);
-                    return;
-                }
-
-                document.getElementById('statusBox').style.display = 'none';
-                document.getElementById('mainForm').style.display = 'block';
+            showStatus('checking', '', 'Getting Your Location...', 'This may take a few seconds...');
+            try {
+                userLocation = await getUserLocation();
+            } catch (e) {
+                showStatus('error', '❌', 'Location Access Required', e.message);
+                return;
             }
 
             currentSession = loadSession();
+
+            document.getElementById('statusBox').style.display = 'none';
+            document.getElementById('mainForm').style.display = 'block';
 
             if (currentSession) {
                 const sessionAlert = document.getElementById('sessionAlert');
@@ -720,7 +637,7 @@
                     <strong>🟢 Active Session Detected</strong>
                     Coach: <span class="time">${currentSession.coach}</span><br>
                     Checked in at: <span class="time">${currentSession.checkinTime}</span><br>
-                    <span style="color: #16a34a; font-weight: bold;">✓ You can now check out</span>
+                    <span style="color: #28a745; font-weight: bold;">✓ You can now check out</span>
                 `;
                 sessionAlert.classList.add('show');
                 
@@ -746,41 +663,34 @@
             }
 
             submitBtn.disabled = true;
-            btnText.textContent = '⏳ Processing...';
+            btnText.textContent = '⏳ Verifying Location...';
 
             const centre = CENTRES[centreName];
-            let distance = 0;
-
-            if (!testMode) {
-                distance = Math.round(calculateDistance(userLocation.lat, userLocation.lon, centre.lat, centre.lon));
-
-                if (distance > centre.radius) {
-                    alert(`❌ Location Verification Failed!\n\nYou are ${distance} meters away from ${centreName}.\nYou must be within ${centre.radius} meters.\n\nThis attempt has been logged.`);
-                    
-                    const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-                    const mapsLink = `https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}`;
-                    
-                    await sendToSheet({
-                        timestamp: timestamp,
-                        centre: centreName,
-                        coach: coach,
-                        action: 'FAILED ATTEMPT',
-                        status: '❌ FAILED - TOO FAR',
-                        mapsLink: mapsLink,
-                        distance: distance + 'm',
-                        duration: ''
-                    });
-
-                    submitBtn.disabled = false;
-                    btnText.textContent = '📍 Verify Location & Submit';
-                    return;
-                }
-            } else {
-                distance = 0;
-            }
+            const distance = Math.round(calculateDistance(userLocation.lat, userLocation.lon, centre.lat, centre.lon));
 
             const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
             const mapsLink = `https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}`;
+
+            if (distance > centre.radius) {
+                alert(`❌ Location Verification Failed!\n\nYou are ${distance} meters away from ${centreName}.\nYou must be within ${centre.radius} meters.\n\nThis attempt has been logged and reported to management.`);
+                
+                await sendToSheet({
+                    timestamp: timestamp,
+                    centre: centreName,
+                    coach: coach,
+                    action: 'FAILED ATTEMPT',
+                    status: '❌ FAILED - TOO FAR',
+                    mapsLink: mapsLink,
+                    distance: distance + 'm',
+                    duration: ''
+                });
+
+                submitBtn.disabled = false;
+                btnText.textContent = '📍 Verify Location & Submit';
+                return;
+            }
+
+            btnText.textContent = '⏳ Submitting...';
 
             let duration = '';
 
@@ -788,7 +698,7 @@
                 saveSession(coach, timestamp);
             } else {
                 if (currentSession) {
-                    const durationMs = Date.now() -RetrySContinuejavascript                    const durationMs = Date.now() - currentSession.timestamp;
+                    const durationMs = Date.now() - currentSession.timestamp;
                     duration = formatDuration(durationMs);
                     clearSession();
                 }
@@ -799,7 +709,7 @@
                 centre: centreName,
                 coach: coach,
                 action: action,
-                status: testMode ? '🧪 TEST MODE' : '✅ VERIFIED',
+                status: '✅ VERIFIED',
                 mapsLink: mapsLink,
                 distance: distance + 'm',
                 duration: duration
@@ -844,7 +754,7 @@
                 detailsHTML += `
                     <div class="details-row">
                         <strong>Duration:</strong>
-                        <span style="color: #16a34a;">${duration}</span>
+                        <span style="color: #28a745;">${duration}</span>
                     </div>
                 `;
             }
@@ -856,7 +766,7 @@
                 </div>
                 <div class="details-row">
                     <strong>Status:</strong>
-                    <span style="color: #16a34a; font-weight: bold;">${testMode ? '🧪 TEST' : '✅ VERIFIED'}</span>
+                    <span style="color: #28a745; font-weight: bold;">✅ VERIFIED</span>
                 </div>
             `;
             
@@ -868,6 +778,3 @@
     </script>
 </body>
 </html>
-
-
-
