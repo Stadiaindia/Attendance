@@ -1,0 +1,755 @@
+html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STADIA Attendance System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .security-badge {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            font-size: 12px;
+            color: #155724;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(40,167,69,0.2);
+        }
+
+        .centre-card {
+            background: linear-gradient(135deg, #e7f3ff 0%, #cfe7ff 100%);
+            border: 2px solid #2196F3;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.2);
+        }
+
+        .centre-card .label {
+            color: #0d47a1;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .centre-card .value {
+            color: #0d47a1;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .status-box {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .status-box.show {
+            display: block;
+        }
+
+        .status-box.checking {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+        }
+
+        .status-box.success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+        }
+
+        .status-box.error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+        }
+
+        .status-icon {
+            font-size: 50px;
+            margin-bottom: 12px;
+        }
+
+        .status-text {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .status-detail {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .session-alert {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #856404;
+            display: none;
+        }
+
+        .session-alert.show {
+            display: block;
+        }
+
+        .session-alert strong {
+            color: #533f03;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .session-alert .time {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+
+        select:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+            color: #999;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .radio-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .radio-option label {
+            display: block;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+            background: white;
+        }
+
+        .radio-option input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(102,126,234,0.3);
+        }
+
+        .radio-option input[type="radio"]:disabled + label {
+            background: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+            border-color: #ddd;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #0d47a1;
+            line-height: 1.5;
+        }
+
+        .success-screen {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .success-screen.show {
+            display: block;
+        }
+
+        .success-icon-big {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 0.6s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .success-screen h2 {
+            color: #28a745;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .success-screen p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .details-card {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 10px;
+            text-align: left;
+            margin: 20px 0;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .details-row {
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .details-row:last-child {
+            border-bottom: none;
+        }
+
+        .details-row strong {
+            color: #495057;
+        }
+
+        .details-row span {
+            color: #212529;
+            font-weight: 600;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🎯</div>
+            <h1>STADIA Attendance</h1>
+            <p>GPS-Verified Check In/Out System</p>
+        </div>
+
+        <div class="security-badge">
+            🔒 SECURE GPS TRACKING • LOCATION VERIFIED
+        </div>
+
+        <div class="centre-card">
+            <div class="label">Centre Location</div>
+            <div class="value" id="centreDisplay">Loading...</div>
+        </div>
+
+        <div class="status-box checking show" id="statusBox">
+            <div class="spinner"></div>
+            <div class="status-text">Initializing System...</div>
+            <div class="status-detail">Please wait while we verify your location...</div>
+        </div>
+
+        <div id="mainForm" style="display: none;">
+            <div class="info-box">
+                📍 Your GPS location is being tracked. You must be within 100 meters of the centre to mark attendance.
+            </div>
+
+            <div class="session-alert" id="sessionAlert"></div>
+
+            <form id="attendanceForm">
+                <div class="form-group">
+                    <label>Select Your Name *</label>
+                    <select id="coachName" required>
+                        <option value="">-- Choose Your Name --</option>
+                        <option value="NISHA KUMARI">NISHA KUMARI</option>
+                        <option value="PRATIK GUPTA">PRATIK GUPTA</option>
+                        <option value="ARKO DAS">ARKO DAS</option>
+                        <option value="ISHIKA TARAFE">ISHIKA TARAFE</option>
+                        <option value="ARUP MORAL">ARUP MORAL</option>
+                        <option value="MD. JAVED">MD. JAVED</option>
+                        <option value="SUDHA RANI M">SUDHA RANI M</option>
+                        <option value="DIBYADITYA SE">DIBYADITYA SE</option>
+                        <option value="AYON CHAKRA">AYON CHAKRA</option>
+                        <option value="DEBJOY CHAKI">DEBJOY CHAKI</option>
+                        <option value="YUDHAJIT DAS">YUDHAJIT DAS</option>
+                        <option value="ABHISHEK MAJ">ABHISHEK MAJ</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Action *</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="checkin" name="action" value="Check - In Time" required>
+                            <label for="checkin">✅ Check In</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="checkout" name="action" value="Check - out Time" disabled>
+                            <label for="checkout">🚪 Check Out</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" id="submitBtn">
+                    <span id="btnText">📍 Submit Attendance</span>
+                </button>
+            </form>
+        </div>
+
+        <div class="success-screen" id="successScreen">
+            <div class="success-icon-big">✅</div>
+            <h2 id="successTitle">Success!</h2>
+            <p id="successMessage"></p>
+            <div class="details-card" id="successDetails"></div>
+            <button class="btn" onclick="location.reload()">✨ Done</button>
+        </div>
+
+        <div class="footer">
+            Powered by STADIA Automation
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwgy9DGq_EKrOr7XpZhlGb9AAQPYHzENIkRQwhN2_EMlbKUL339veF8Ha9H-Di-rf21/exec';
+
+        const CENTRES = {
+            'SUBHANNA': { lat: 22.5920, lon: 88.4165, radius: 100 },
+            'ORDNANCE': { lat: 22.5726, lon: 88.3639, radius: 100 },
+            'SEBS': { lat: 22.5801, lon: 88.3742, radius: 100 },
+            'PARK STREET': { lat: 22.5529, lon: 88.3632, radius: 100 },
+            'KNC': { lat: 22.5756, lon: 88.3697, radius: 100 },
+            'BARASAT': { lat: 22.7205, lon: 88.4836, radius: 100 },
+            'MADHYAMGRAM': { lat: 22.7006, lon: 88.4479, radius: 100 },
+            'SODEPUR': { lat: 22.7011, lon: 88.3870, radius: 100 }
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const centreName = urlParams.get('centre')?.toUpperCase() || null;
+        let userLocation = null;
+        let currentSession = null;
+
+        function showStatus(type, icon, text, detail) {
+            const box = document.getElementById('statusBox');
+            box.className = `status-box show ${type}`;
+            box.innerHTML = `
+                ${type === 'checking' ? '<div class="spinner"></div>' : `<div class="status-icon">${icon}</div>`}
+                <div class="status-text">${text}</div>
+                <div class="status-detail">${detail}</div>
+            `;
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371e3;
+            const φ1 = lat1 * Math.PI / 180;
+            const φ2 = lat2 * Math.PI / 180;
+            const Δφ = (lat2 - lat1) * Math.PI / 180;
+            const Δλ = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                      Math.cos(φ1) * Math.cos(φ2) *
+                      Math.sin(Δλ/2) * Math.sin(Δλ/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function getUserLocation() {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject(new Error('GPS not supported on this device'));
+                    return;
+                }
+                navigator.geolocation.getCurrentPosition(
+                    pos => resolve({ 
+                        lat: pos.coords.latitude, 
+                        lon: pos.coords.longitude, 
+                        accuracy: Math.round(pos.coords.accuracy)
+                    }),
+                    err => {
+                        let msg = 'Unable to get your location. ';
+                        if (err.code === 1) msg += 'Please enable location permissions in your browser settings.';
+                        else if (err.code === 2) msg += 'Location unavailable. Please ensure GPS is turned on.';
+                        else if (err.code === 3) msg += 'Location request timed out. Please try again.';
+                        reject(new Error(msg));
+                    },
+                    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+                );
+            });
+        }
+
+        async function sendToSheet(data) {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                return true;
+            } catch (e) {
+                console.error('Sheet error:', e);
+                return true;
+            }
+        }
+
+        function loadSession() {
+            const stored = localStorage.getItem('stadiaSession_' + centreName);
+            if (stored) {
+                const session = JSON.parse(stored);
+                const hoursSince = (Date.now() - session.timestamp) / (1000 * 60 * 60);
+                if (hoursSince < 24) {
+                    return session;
+                }
+                localStorage.removeItem('stadiaSession_' + centreName);
+            }
+            return null;
+        }
+
+        function saveSession(coach, checkinTime) {
+            const session = {
+                centre: centreName,
+                coach: coach,
+                timestamp: Date.now(),
+                checkinTime: checkinTime
+            };
+            localStorage.setItem('stadiaSession_' + centreName, JSON.stringify(session));
+            return session;
+        }
+
+        function clearSession() {
+            localStorage.removeItem('stadiaSession_' + centreName);
+        }
+
+        function formatDuration(ms) {
+            const minutes = Math.round(ms / 60000);
+            if (minutes < 60) return `${minutes} mins`;
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return `${hours} hr${hours > 1 ? 's' : ''} ${mins} mins`;
+        }
+
+        async function initialize() {
+            if (!centreName || !CENTRES[centreName]) {
+                showStatus('error', '⛔', 'Invalid QR Code', 'Please scan a valid QR code at your centre entrance.');
+                return;
+            }
+
+            document.getElementById('centreDisplay').textContent = centreName;
+
+            showStatus('checking', '', 'Getting Your Location...', 'Accessing GPS... Please wait...');
+            try {
+                userLocation = await getUserLocation();
+            } catch (e) {
+                showStatus('error', '❌', 'Location Access Required', e.message);
+                return;
+            }
+
+            showStatus('checking', '', 'Verifying Location...', 'Checking if you are at the centre...');
+            const centre = CENTRES[centreName];
+            const distance = Math.round(calculateDistance(userLocation.lat, userLocation.lon, centre.lat, centre.lon));
+
+            if (distance > centre.radius) {
+                showStatus('error', '❌', 'Location Verification Failed!', 
+                    `You are ${distance} meters away from ${centreName}. You must be within ${centre.radius} meters to mark attendance.`);
+                
+                const mapsLink = `https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}`;
+                await sendToSheet({
+                    timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+                    centre: centreName,
+                    coach: 'UNKNOWN',
+                    action: 'FAILED ATTEMPT',
+                    status: '❌ FAILED - TOO FAR',
+                    mapsLink: mapsLink,
+                    distance: distance + 'm',
+                    duration: ''
+                });
+                return;
+            }
+
+            currentSession = loadSession();
+
+            document.getElementById('statusBox').style.display = 'none';
+            document.getElementById('mainForm').style.display = 'block';
+
+            if (currentSession) {
+                const sessionAlert = document.getElementById('sessionAlert');
+                sessionAlert.innerHTML = `
+                    <strong>🟢 Active Session Detected</strong>
+                    Coach: <span class="time">${currentSession.coach}</span><br>
+                    Checked in at: <span class="time">${currentSession.checkinTime}</span><br>
+                    <span style="color: #28a745; font-weight: bold;">✓ You can now check out</span>
+                `;
+                sessionAlert.classList.add('show');
+                
+                document.getElementById('coachName').value = currentSession.coach;
+                document.getElementById('coachName').disabled = true;
+                document.getElementById('checkin').disabled = true;
+                document.getElementById('checkout').disabled = false;
+                document.getElementById('checkout').checked = true;
+            }
+        }
+
+        document.getElementById('attendanceForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const coach = document.getElementById('coachName').value;
+            const action = document.querySelector('input[name="action"]:checked').value;
+
+            if (!coach) {
+                alert('⚠️ Please select your name');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            btnText.textContent = '⏳ Processing...';
+
+            const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+            const mapsLink = `https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}`;
+            const centre = CENTRES[centreName];
+            const distance = Math.round(calculateDistance(userLocation.lat, userLocation.lon, centre.lat, centre.lon));
+
+            let duration = '';
+
+            if (action === 'Check - In Time') {
+                saveSession(coach, timestamp);
+            } else {
+                if (currentSession) {
+                    const durationMs = Date.now() - currentSession.timestamp;
+                    duration = formatDuration(durationMs);
+                    clearSession();
+                }
+            }
+
+            const data = {
+                timestamp: timestamp,
+                centre: centreName,
+                coach: coach,
+                action: action,
+                status: '✅ VERIFIED',
+                mapsLink: mapsLink,
+                distance: distance + 'm',
+                duration: duration
+            };
+
+            await sendToSheet(data);
+
+            document.getElementById('mainForm').style.display = 'none';
+            
+            const successTitle = document.getElementById('successTitle');
+            const successMessage = document.getElementById('successMessage');
+            const successDetails = document.getElementById('successDetails');
+            
+            if (action === 'Check - In Time') {
+                successTitle.textContent = 'Check-In Successful!';
+                successMessage.textContent = 'Your attendance has been recorded. Don\'t forget to check out when you leave!';
+            } else {
+                successTitle.textContent = 'Check-Out Successful!';
+                successMessage.textContent = 'Your session has been completed and logged successfully.';
+            }
+            
+            let detailsHTML = `
+                <div class="details-row">
+                    <strong>Coach:</strong>
+                    <span>${coach}</span>
+                </div>
+                <div class="details-row">
+                    <strong>Centre:</strong>
+                    <span>${centreName}</span>
+                </div>
+                <div class="details-row">
+                    <strong>Action:</strong>
+                    <span>${action === 'Check - In Time' ? '✅ Check-In' : '🚪 Check-Out'}</span>
+                </div>
+                <div class="details-row">
+                    <strong>Time:</strong>
+                    <span>${timestamp}</span>
+                </div>
+            `;
+            
+            if (duration) {
+                detailsHTML += `
+                    <div class="details-row">
+                        <strong>Duration:</strong>
+                        <span style="color: #28a745;">${duration}</span>
+                    </div>
+                `;
+            }
+            
+            detailsHTML += `
+                <div class="details-row">
+                    <strong>Distance:</strong>
+                    <span>${distance} meters</span>
+                </div>
+                <div class="details-row">
+                    <strong>Status:</strong>
+                    <span style="color: #28a745; font-weight: bold;">✅ VERIFIED</span>
+                </div>
+            `;
+            
+            successDetails.innerHTML = detailsHTML;
+            document.getElementById('successScreen').classList.add('show');
+        });
+
+        window.addEventListener('load', initialize);
+    </script>
+</body>
+</html>
+```
