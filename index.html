@@ -310,6 +310,17 @@ html<!DOCTYPE html>
             line-height: 1.5;
         }
 
+        .name-first-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #856404;
+            line-height: 1.5;
+        }
+
         .success-screen {
             display: none;
             text-align: center;
@@ -404,33 +415,48 @@ html<!DOCTYPE html>
         <div class="status-box checking show" id="statusBox">
             <div class="spinner"></div>
             <div class="status-text">Initializing System...</div>
-            <div class="status-detail">Please wait while we verify your location...</div>
+            <div class="status-detail">Please wait...</div>
         </div>
 
         <div id="mainForm" style="display: none;">
-            <div class="info-box">
-                📍 Your GPS location is being tracked. You must be within 100 meters of the centre to mark attendance.
+            <div class="name-first-box">
+                ⚠️ <strong>IMPORTANT:</strong> Select your name FIRST, then we'll verify your location.
             </div>
 
             <div class="session-alert" id="sessionAlert"></div>
 
             <form id="attendanceForm">
                 <div class="form-group">
-                    <label>Select Your Name *</label>
+                    <label>Select Your Name FIRST *</label>
                     <select id="coachName" required>
                         <option value="">-- Choose Your Name --</option>
-                        <option value="NISHA KUMARI">NISHA KUMARI</option>
-                        <option value="PRATIK GUPTA">PRATIK GUPTA</option>
+                        <option value="ABHISHEK MAJHI">ABHISHEK MAJHI</option>
+                        <option value="ALAPAN SEN">ALAPAN SEN</option>
                         <option value="ARKO DAS">ARKO DAS</option>
-                        <option value="ISHIKA TARAFE">ISHIKA TARAFE</option>
                         <option value="ARUP MORAL">ARUP MORAL</option>
+                        <option value="AYON CHAKRABORTY">AYON CHAKRABORTY</option>
+                        <option value="DEBJOY CHAKRABORTY">DEBJOY CHAKRABORTY</option>
+                        <option value="DIBYADITYA SENGUPTA">DIBYADITYA SENGUPTA</option>
+                        <option value="ISHIKA TARAFDER">ISHIKA TARAFDER</option>
                         <option value="MD. JAVED">MD. JAVED</option>
-                        <option value="SUDHA RANI M">SUDHA RANI M</option>
-                        <option value="DIBYADITYA SE">DIBYADITYA SE</option>
-                        <option value="AYON CHAKRA">AYON CHAKRA</option>
-                        <option value="DEBJOY CHAKI">DEBJOY CHAKI</option>
+                        <option value="NISHA KUMARI RAJAK">NISHA KUMARI RAJAK</option>
+                        <option value="PRATIK GUPTA">PRATIK GUPTA</option>
+                        <option value="PRITIMOY MONDAL">PRITIMOY MONDAL</option>
+                        <option value="PRIYANKA NASKAR">PRIYANKA NASKAR</option>
+                        <option value="RAHUL NATH">RAHUL NATH</option>
+                        <option value="RAJDEEP MITRA">RAJDEEP MITRA</option>
+                        <option value="RATUL RAY">RATUL RAY</option>
+                        <option value="SAMAR MUNDA">SAMAR MUNDA</option>
+                        <option value="SAMRIDDHA PAL">SAMRIDDHA PAL</option>
+                        <option value="SAPTARSHI MONDAL">SAPTARSHI MONDAL</option>
+                        <option value="SHANTANU KUJUR">SHANTANU KUJUR</option>
+                        <option value="SUBHOJIT SANFUI">SUBHOJIT SANFUI</option>
+                        <option value="SUDHA RANI MAHATO">SUDHA RANI MAHATO</option>
+                        <option value="SUDIP CHATTERJEE">SUDIP CHATTERJEE</option>
+                        <option value="SUJIT BHATTACHARYA">SUJIT BHATTACHARYA</option>
+                        <option value="SUVADIP DAS">SUVADIP DAS</option>
+                        <option value="TANMOY ROY">TANMOY ROY</option>
                         <option value="YUDHAJIT DAS">YUDHAJIT DAS</option>
-                        <option value="ABHISHEK MAJ">ABHISHEK MAJ</option>
                     </select>
                 </div>
 
@@ -449,7 +475,7 @@ html<!DOCTYPE html>
                 </div>
 
                 <button type="submit" class="btn" id="submitBtn">
-                    <span id="btnText">📍 Submit Attendance</span>
+                    <span id="btnText">📍 Verify Location & Submit</span>
                 </button>
             </form>
         </div>
@@ -471,14 +497,14 @@ html<!DOCTYPE html>
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwgy9DGq_EKrOr7XpZhlGb9AAQPYHzENIkRQwhN2_EMlbKUL339veF8Ha9H-Di-rf21/exec';
 
         const CENTRES = {
+            'SEBS': { lat: 22.5801, lon: 88.3742, radius: 100 },
             'SUBHANNA': { lat: 22.5920, lon: 88.4165, radius: 100 },
             'ORDNANCE': { lat: 22.5726, lon: 88.3639, radius: 100 },
-            'SEBS': { lat: 22.5801, lon: 88.3742, radius: 100 },
-            'PARK STREET': { lat: 22.5529, lon: 88.3632, radius: 100 },
-            'KNC': { lat: 22.5756, lon: 88.3697, radius: 100 },
-            'BARASAT': { lat: 22.7205, lon: 88.4836, radius: 100 },
             'MADHYAMGRAM': { lat: 22.7006, lon: 88.4479, radius: 100 },
-            'SODEPUR': { lat: 22.7011, lon: 88.3870, radius: 100 }
+            'SODEPUR': { lat: 22.7011, lon: 88.3870, radius: 100 },
+            'KNC': { lat: 22.5756, lon: 88.3697, radius: 100 },
+            'PARKSTREET': { lat: 22.5529, lon: 88.3632, radius: 100 },
+            'BARASAT': { lat: 22.7205, lon: 88.4836, radius: 100 }
         };
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -592,33 +618,11 @@ html<!DOCTYPE html>
 
             document.getElementById('centreDisplay').textContent = centreName;
 
-            showStatus('checking', '', 'Getting Your Location...', 'Accessing GPS... Please wait...');
+            showStatus('checking', '', 'Getting Your Location...', 'This may take a few seconds...');
             try {
                 userLocation = await getUserLocation();
             } catch (e) {
                 showStatus('error', '❌', 'Location Access Required', e.message);
-                return;
-            }
-
-            showStatus('checking', '', 'Verifying Location...', 'Checking if you are at the centre...');
-            const centre = CENTRES[centreName];
-            const distance = Math.round(calculateDistance(userLocation.lat, userLocation.lon, centre.lat, centre.lon));
-
-            if (distance > centre.radius) {
-                showStatus('error', '❌', 'Location Verification Failed!', 
-                    `You are ${distance} meters away from ${centreName}. You must be within ${centre.radius} meters to mark attendance.`);
-                
-                const mapsLink = `https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}`;
-                await sendToSheet({
-                    timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
-                    centre: centreName,
-                    coach: 'UNKNOWN',
-                    action: 'FAILED ATTEMPT',
-                    status: '❌ FAILED - TOO FAR',
-                    mapsLink: mapsLink,
-                    distance: distance + 'm',
-                    duration: ''
-                });
                 return;
             }
 
@@ -654,17 +658,39 @@ html<!DOCTYPE html>
             const action = document.querySelector('input[name="action"]:checked').value;
 
             if (!coach) {
-                alert('⚠️ Please select your name');
+                alert('⚠️ Please select your name first!');
                 return;
             }
 
             submitBtn.disabled = true;
-            btnText.textContent = '⏳ Processing...';
+            btnText.textContent = '⏳ Verifying Location...';
+
+            const centre = CENTRES[centreName];
+            const distance = Math.round(calculateDistance(userLocation.lat, userLocation.lon, centre.lat, centre.lon));
 
             const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
             const mapsLink = `https://maps.google.com/?q=${userLocation.lat},${userLocation.lon}`;
-            const centre = CENTRES[centreName];
-            const distance = Math.round(calculateDistance(userLocation.lat, userLocation.lon, centre.lat, centre.lon));
+
+            if (distance > centre.radius) {
+                alert(`❌ Location Verification Failed!\n\nYou are ${distance} meters away from ${centreName}.\nYou must be within ${centre.radius} meters.\n\nThis attempt has been logged and reported to management.`);
+                
+                await sendToSheet({
+                    timestamp: timestamp,
+                    centre: centreName,
+                    coach: coach,
+                    action: 'FAILED ATTEMPT',
+                    status: '❌ FAILED - TOO FAR',
+                    mapsLink: mapsLink,
+                    distance: distance + 'm',
+                    duration: ''
+                });
+
+                submitBtn.disabled = false;
+                btnText.textContent = '📍 Verify Location & Submit';
+                return;
+            }
+
+            btnText.textContent = '⏳ Submitting...';
 
             let duration = '';
 
